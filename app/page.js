@@ -1,4 +1,4 @@
-import Movie from "./components/header/Movie";
+import Movie from "./components/main/Movie";
 
 async function getData() {
   const res = await fetch("https://seleksi-sea-2023.vercel.app/api/movies");
@@ -13,7 +13,7 @@ export default  async function Page() {
   const data = await getData()
   console.log(data)
     return <div>
-      <Movie movies={data}/>
+      <Movie className='w-90 mx-auto max-w-40rem p-12 my-8 text-center' movies={data}/>
     </div>
   }
   

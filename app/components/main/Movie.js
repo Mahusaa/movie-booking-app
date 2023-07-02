@@ -1,9 +1,9 @@
 import React from 'react'
-import Card from '../../Card'
+import Card from '../UI/Card'
 
 export default function Movie({movies}) {
   return (
-<div className='sm:grid sm:grid-cols-2 lg:grid-cols-4 mx-auto py-4 justify-center items-center'>
+<div className=' mx-10 dark:bg-gray-700 '>
   {movies.map((movie) => (
     <Card key={movie.id} movie={movie} />
   ))}
