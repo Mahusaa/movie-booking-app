@@ -1,3 +1,5 @@
+import Movie from "./components/header/Movie";
+
 async function getData() {
   const res = await fetch("https://seleksi-sea-2023.vercel.app/api/movies");
 
@@ -10,6 +12,8 @@ async function getData() {
 export default  async function Page() {
   const data = await getData()
   console.log(data)
-    return <h1 className="text-red-400">Hello, Next.js!</h1>
+    return <div>
+      <Movie movies={data}/>
+    </div>
   }
   
