@@ -13,7 +13,7 @@ export default  async function Page() {
   const data = await getData()
   console.log(data)
     return <div>
-      <Movie className='w-90 mx-auto max-w-40rem p-12 my-8 text-center' movies={data}/>
+      <Movie movies={data}/>
     </div>
   }
   
