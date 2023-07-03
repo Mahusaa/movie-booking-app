@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+html::-webkit-scrollbar {
+  display: none;
+}
 * {
     box-sizing: border-box;
   }
@@ -9,6 +12,7 @@
   html {
     font-family: sans-serif;
     background: #fff;
+    scrollbar-width: none;
   }
   
   body {
