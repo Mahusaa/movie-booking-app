@@ -1,45 +1,37 @@
 "use client"
 import ButtonBlue from '@/app/components/UI/ButtonBlue';
 import React, { useEffect, useState } from 'react';
-
-async function getMovie(id) {
-  const res = await fetch("https://seleksi-sea-2023.vercel.app/api/movies");
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
-  }
-
-  const movies = await res.json();
-  const movie = movies.find((movie) => movie.id === Number(id));
-
-  if (!movie) {
-    throw new Error('Movie not found');
-  }
-  console.log(movie)
-  return movie;
-}
+import getMovies from '../../api/getMovie';
+import Loading from '../../loading';
 
 export default function Page({ params }) {
-  const [movie, setMovie] = useState(null);
+  const [movies, setMovies] = useState(null);
+  const movie = movies ? movies.find((movie) => movie.id === Number(params.id)) : null;
 
   useEffect(() => {
-    getMovie(params.id)
-      .then((result) => {
-        setMovie(result);
-      })
-      .catch((error) => {
+    const fetchMovies = async () => {
+      try {
+        const movieData = await getMovies();
+        setMovies(movieData);
+      } catch (error) {
         console.error(error);
-      });
-  }, [params.id]);
-  console.log(params.id)
+      }
+    };
+
+    fetchMovies();
+  }, []);
+
+  if (!movies) {
+    return <Loading />
+  }
 
   if (!movie) {
-    return <div>Loading...</div>;
+    return <div>Movie not found</div>;
   }
 
   return (
     <div className='m-20'>
-      <div >
+      <div>
         <div className="flex bg-color-red mx-auto max-w-xl shadow-lg rounded-lg overflow-hidden m-8">
           <div className="w-1/3 bg-contain bg-no-repeat bg-center" style={{ backgroundImage: `url(${movie.poster_url})` }}>
           </div>
@@ -56,6 +48,7 @@ export default function Page({ params }) {
     </div>
   );
 }
+
 
 
 
