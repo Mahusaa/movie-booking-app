@@ -3,6 +3,7 @@ import '../styles/globals.css'
 import Loading from './loading'
 import MainHeader from './components/header/MainHeader'
 import Home from './components/main/Home'
+import Footer from './components/footer/footer'
 
 
 export default function RootLayout({ children }) {
@@ -12,6 +13,7 @@ export default function RootLayout({ children }) {
         <MainHeader />
         <Home>{children}</Home>
         <Suspense fallback={<Loading />}/>
+        <Footer />
         </body>
       </html>
     )
