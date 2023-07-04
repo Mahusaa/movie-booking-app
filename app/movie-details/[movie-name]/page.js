@@ -1,13 +1,15 @@
-"use client"
-import ButtonBlue from '@/app/components/UI/ButtonBlue';
-import React, { useEffect, useState } from 'react';
-import getMovies from '../../api/getMovie';
-import Loading from '../../loading';
+"use client";
+import ButtonBlue from "@/app/components/UI/ButtonBlue";
+import React, { useEffect, useState } from "react";
+import getMovies from "../../api/getMovie";
+import Loading from "../../loading";
 
 export default function Page({ params }) {
+  const movieName = Object.values(params)[0];
   const [movies, setMovies] = useState(null);
-  const movie = movies ? movies.find((movie) => movie.id === Number(params.id)) : null;
-
+  const movie = movies
+    ? movies.find((movie) => movie.title.toLowerCase().replace(/ /g, '-').replace(/[^\w\s]/g, '').replace(/\s+/g, '-') === movieName)
+    : null;
   useEffect(() => {
     const fetchMovies = async () => {
       try {
@@ -22,7 +24,7 @@ export default function Page({ params }) {
   }, []);
 
   if (!movies) {
-    return <Loading />
+    return <Loading />;
   }
 
   if (!movie) {
@@ -30,16 +32,20 @@ export default function Page({ params }) {
   }
 
   return (
-    <div className='m-20'>
+    <div className="m-20">
       <div>
         <div className="flex bg-color-red mx-auto max-w-xl shadow-lg rounded-lg overflow-hidden m-8">
-          <div className="w-1/3 bg-contain bg-no-repeat bg-center" style={{ backgroundImage: `url(${movie.poster_url})` }}>
-          </div>
+          <div
+            className="w-1/3 bg-contain bg-no-repeat bg-center"
+            style={{ backgroundImage: `url(${movie.poster_url})` }}
+          ></div>
           <div className="w-2/3 p-4 bg-color-red">
             <h1 className="text-gray-900 font-bold text-2xl">{movie.title}</h1>
             <p className="mt-2 text-gray-600 text-sm">{movie.description}</p>
             <div className="flex item-center justify-between mt-3">
-              <h1 className="text-gray-700 font-bold text-xl">${movie.ticket_price}</h1>
+              <h1 className="text-gray-700 font-bold text-xl">
+                ${movie.ticket_price}
+              </h1>
               <ButtonBlue>Book Ticket</ButtonBlue>
             </div>
           </div>
@@ -48,7 +54,3 @@ export default function Page({ params }) {
     </div>
   );
 }
-
-
-
-
