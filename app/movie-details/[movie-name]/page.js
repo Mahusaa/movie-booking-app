@@ -3,12 +3,20 @@ import ButtonBlue from "@/app/components/UI/ButtonBlue";
 import React, { useEffect, useState } from "react";
 import getMovies from "../../api/getMovie";
 import Loading from "../../loading";
+import Link from "next/link";
 
 export default function Page({ params }) {
   const movieName = Object.values(params)[0];
   const [movies, setMovies] = useState(null);
   const movie = movies
-    ? movies.find((movie) => movie.title.toLowerCase().replace(/ /g, '-').replace(/[^\w\s]/g, '').replace(/\s+/g, '-') === movieName)
+    ? movies.find(
+        (movie) =>
+          movie.title
+            .toLowerCase()
+            .replace(/ /g, "-")
+            .replace(/[^\w\s]/g, "")
+            .replace(/\s+/g, "-") === movieName
+      )
     : null;
   useEffect(() => {
     const fetchMovies = async () => {
@@ -46,7 +54,9 @@ export default function Page({ params }) {
               <h1 className="text-gray-700 font-bold text-xl">
                 ${movie.ticket_price}
               </h1>
-              <ButtonBlue>Book Ticket</ButtonBlue>
+              <ButtonBlue>
+                <Link href={`/movie-details/${movieName}/booking`} >Book Ticket</Link>
+              </ButtonBlue>
             </div>
           </div>
         </div>

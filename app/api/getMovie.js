@@ -8,5 +8,6 @@ export default async function getMovie() {
   
     const movies = await res.json();
 
+
   return (movies)
 };
