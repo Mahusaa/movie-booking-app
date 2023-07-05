@@ -8,7 +8,9 @@ export default function BookingForm({ title, ticketPrice }) {
   useEffect(() => {
     const fetchSeats = async () => {
       try {
-        const response = await fetch("https://movie-booking-f84f4-default-rtdb.asia-southeast1.firebasedatabase.app/movie.json");
+        const response = await fetch(
+          "https://movie-booking-f84f4-default-rtdb.asia-southeast1.firebasedatabase.app/movie.json"
+        );
         if (response.ok) {
           const data = await response.json();
           const selectedMovies = Object.values(data);
@@ -16,19 +18,25 @@ export default function BookingForm({ title, ticketPrice }) {
           let allSelectedSeats = [];
           selectedMovies.forEach((movie) => {
             if (movie.title === movieTitle) {
-              setSelectedSeats((prevSeats) => prevSeats.concat(movie.selectedSeats));
+              setSelectedSeats((prevSeats) =>
+                prevSeats.concat(movie.selectedSeats)
+              );
             }
             allSelectedSeats = allSelectedSeats.concat(movie.selectedSeats);
           });
 
-          const totalSeats = Array.from({ length: 64 }, (_, index) => index + 1);
-          const availableSeats = totalSeats.filter(seat => !allSelectedSeats.includes(seat));
-          console.log(availableSeats);
+          const totalSeats = Array.from(
+            { length: 64 },
+            (_, index) => index + 1
+          );
+          const availableSeats = totalSeats.filter(
+            (seat) => !allSelectedSeats.includes(seat)
+          );
         } else {
-          console.error('Failed to fetch seat availability:', response.status);
+          console.error("Failed to fetch seat availability:", response.status);
         }
       } catch (error) {
-        console.error('Failed by catch to fetch seat availability:', error);
+        console.error("Failed by catch to fetch seat availability:", error);
       }
     };
 
@@ -39,7 +47,7 @@ export default function BookingForm({ title, ticketPrice }) {
     if (seatsByClient.includes(seat)) {
       setSeatsByClient(seatsByClient.filter((s) => s !== seat));
       setSelectedSeats(selectedSeats.filter((s) => s !== seat));
-    } else if (!selectedSeats.includes(seat)) {
+    } else if (!selectedSeats.includes(seat) && seatsByClient.length < 6) {
       setSeatsByClient([...seatsByClient, seat]);
       setSelectedSeats([...selectedSeats, seat]);
     }
@@ -56,6 +64,9 @@ export default function BookingForm({ title, ticketPrice }) {
   const totalPrice = ticketPrice * seatsByClient.length;
 
   const handleConfirmBooking = async () => {
+    if (seatsByClient.length < 1) {
+      return; // Do nothing if no seats are selected
+    }
     await fetch(
       "https://movie-booking-f84f4-default-rtdb.asia-southeast1.firebasedatabase.app/movie.json",
       {
@@ -80,7 +91,11 @@ export default function BookingForm({ title, ticketPrice }) {
               key={seat}
               onClick={() => handleSeatClick(seat)}
               className={`w-10 h-10 rounded-lg cursor-pointer text-white font-bold flex items-center justify-center ${
-                isSeatSelected(seat) ? "bg-green-500" : isSeatAvailable(seat) ? "bg-gray-500" : "bg-red-500"
+                isSeatSelected(seat)
+                  ? "bg-green-500"
+                  : isSeatAvailable(seat)
+                  ? "bg-gray-500"
+                  : "bg-red-500"
               }`}
               style={{ margin: "2px" }}
             >
@@ -100,7 +115,13 @@ export default function BookingForm({ title, ticketPrice }) {
           <div className="mb-4">
             <span className="font-semibold">Total Price:</span> Rp {totalPrice}
           </div>
-          <button onClick={handleConfirmBooking}>Confirm Booking</button>
+          <button
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-bold rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 m-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 "
+            onClick={handleConfirmBooking}
+            disabled={seatsByClient.length < 1}
+          >
+            Confirm Booking
+          </button>
         </div>
       </div>
     </div>
