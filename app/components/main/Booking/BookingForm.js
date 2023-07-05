@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import ButtonBlue from '../../UI/ButtonBlue';
 
 export default function BookingForm({title, ticketPrice}) {
   console.log(ticketPrice)
@@ -17,16 +16,18 @@ export default function BookingForm({title, ticketPrice}) {
     return selectedSeats.includes(seat);
   };
 
-  const calculateTotalPrice = () => {
-    const seatPrice = ticketPrice;
-    return selectedSeats.length * seatPrice;
-  };
+  const totalPrice = ticketPrice*selectedSeats.length
+  console.log(totalPrice)
 
-  const handleConfirmBooking = (e) => {
-    alert('Button clicked');
-
-    setName('');
-    setSelectedSeats([]);
+  const handleConfirmBooking = async () => {
+    await fetch("https://movie-booking-f84f4-default-rtdb.asia-southeast1.firebasedatabase.app/movie.json", {
+      method: "POST",
+      body: JSON.stringify({
+        title,
+        totalPrice,
+        selectedSeats,
+      })
+    })
   };
 
   return (
@@ -57,11 +58,11 @@ export default function BookingForm({title, ticketPrice}) {
             {selectedSeats.join(', ')}
           </div>
           <div className="mb-4">
-            <span className="font-semibold">Total Price:</span> Rp {calculateTotalPrice()}
+            <span className="font-semibold">Total Price:</span> Rp {totalPrice}
           </div>
-          <ButtonBlue type="button" onClick={handleConfirmBooking}>
+          <button onClick={handleConfirmBooking}>
             Confirm Booking
-          </ButtonBlue>
+          </button>
         </div>
       </div>
     </div>
