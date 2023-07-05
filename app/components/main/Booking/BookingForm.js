@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 export default function BookingForm({ title, ticketPrice }) {
-  const movieTitle = title
+  const movieTitle = title;
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [seatsByClient, setSeatsByClient] = useState([]);
-  console.log(selectedSeats)
 
   useEffect(() => {
     const fetchSeats = async () => {
@@ -12,16 +11,19 @@ export default function BookingForm({ title, ticketPrice }) {
         const response = await fetch("https://movie-booking-f84f4-default-rtdb.asia-southeast1.firebasedatabase.app/movie.json");
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
-           // Replace with the desired movie title
-          const selectedMovie = Object.values(data).find(movie => movie.title === movieTitle);
-          console.log(selectedMovie);
-          if (selectedMovie) {
-            const selectedSeatsByMovie = selectedMovie.selectedSeats;
-            setSelectedSeats(selectedSeatsByMovie);
-          } else {
-            console.log("No data found for movie:", movieTitle);
-          }
+          const selectedMovies = Object.values(data);
+
+          let allSelectedSeats = [];
+          selectedMovies.forEach((movie) => {
+            if (movie.title === movieTitle) {
+              setSelectedSeats((prevSeats) => prevSeats.concat(movie.selectedSeats));
+            }
+            allSelectedSeats = allSelectedSeats.concat(movie.selectedSeats);
+          });
+
+          const totalSeats = Array.from({ length: 64 }, (_, index) => index + 1);
+          const availableSeats = totalSeats.filter(seat => !allSelectedSeats.includes(seat));
+          console.log(availableSeats);
         } else {
           console.error('Failed to fetch seat availability:', response.status);
         }
@@ -29,15 +31,16 @@ export default function BookingForm({ title, ticketPrice }) {
         console.error('Failed by catch to fetch seat availability:', error);
       }
     };
-  
+
     fetchSeats();
   }, [movieTitle]);
-  
 
   const handleSeatClick = (seat) => {
-    if (selectedSeats.includes(seat)) {
+    if (seatsByClient.includes(seat)) {
+      setSeatsByClient(seatsByClient.filter((s) => s !== seat));
       setSelectedSeats(selectedSeats.filter((s) => s !== seat));
-    } else {
+    } else if (!selectedSeats.includes(seat)) {
+      setSeatsByClient([...seatsByClient, seat]);
       setSelectedSeats([...selectedSeats, seat]);
     }
   };
@@ -46,8 +49,11 @@ export default function BookingForm({ title, ticketPrice }) {
     return selectedSeats.includes(seat);
   };
 
+  const isSeatAvailable = (seat) => {
+    return !selectedSeats.includes(seat);
+  };
+
   const totalPrice = ticketPrice * seatsByClient.length;
-  console.log(totalPrice);
 
   const handleConfirmBooking = async () => {
     await fetch(
@@ -57,10 +63,11 @@ export default function BookingForm({ title, ticketPrice }) {
         body: JSON.stringify({
           title,
           totalPrice,
-          selectedSeats,
+          selectedSeats: seatsByClient,
         }),
       }
     );
+    window.location.reload();
   };
 
   return (
@@ -73,9 +80,9 @@ export default function BookingForm({ title, ticketPrice }) {
               key={seat}
               onClick={() => handleSeatClick(seat)}
               className={`w-10 h-10 rounded-lg cursor-pointer text-white font-bold flex items-center justify-center ${
-                isSeatSelected(seat) ? "bg-green-500" : "bg-gray-500"
+                isSeatSelected(seat) ? "bg-green-500" : isSeatAvailable(seat) ? "bg-gray-500" : "bg-red-500"
               }`}
-              style={{ margin: "2px" }} // Added margin for spacing
+              style={{ margin: "2px" }}
             >
               {seat}
             </div>
@@ -85,10 +92,10 @@ export default function BookingForm({ title, ticketPrice }) {
       <div className="w-1/2 mt-4">
         <div className="bg-white p-4 rounded shadow">
           <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
-          <span className="font-semibold">{`Movie :${title}`}</span>
+          <span className="font-semibold">{`Movie: ${title}`}</span>
           <div className="mb-2">
             <span className="font-semibold">Selected Seats:</span>{" "}
-            {selectedSeats.join(", ")}
+            {seatsByClient.join(", ")}
           </div>
           <div className="mb-4">
             <span className="font-semibold">Total Price:</span> Rp {totalPrice}
