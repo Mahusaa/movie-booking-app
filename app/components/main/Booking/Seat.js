@@ -8,7 +8,11 @@ export default function Seat({ seat, selectedSeats, handleSeatClick }) {
     <div
       onClick={() => handleSeatClick(seat)}
       className={`w-10 h-10 rounded-lg cursor-pointer text-white font-bold flex items-center justify-center ${
-        isSeatSelected ? "bg-green-500" : isSeatAvailable ? "bg-gray-500" : "bg-red-500"
+        isSeatSelected
+          ? "bg-green-500"
+          : isSeatAvailable
+          ? "bg-gray-500"
+          : "bg-red-500"
       }`}
       style={{ margin: "2px" }}
     >

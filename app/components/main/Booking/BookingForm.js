@@ -84,7 +84,7 @@ export default function BookingForm({ title, ticketPrice }) {
   };
 
   return (
-<div className="flex justify-center">
+    <div className="flex justify-center">
       <div className="w-1/2">
         <h2 className="text-2xl font-bold mb-4">Booking Form</h2>
         <div className="grid grid-cols-8 gap-2">

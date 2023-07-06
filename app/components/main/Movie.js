@@ -8,7 +8,11 @@ export default function Movie({ movies }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-10">
       {movies.map((movie, index) => {
-        const movieURL = movie.title.toLowerCase().replace(/ /g, '-').replace(/[^\w\s]/g, '').replace(/\s+/g, '-');
+        const movieURL = movie.title
+          .toLowerCase()
+          .replace(/ /g, "-")
+          .replace(/[^\w\s]/g, "")
+          .replace(/\s+/g, "-");
         return (
           <Link key={index + 1} href={`/movie-details/${movieURL}`} passHref>
             <Card>
@@ -37,5 +41,3 @@ export default function Movie({ movies }) {
     </div>
   );
 }
-
-

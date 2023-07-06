@@ -6,9 +6,9 @@ import Loading from "@/app/loading";
 import { useState, useEffect } from "react";
 import getMovies from "../../../api/getMovie";
 
-export default function Seats({params}) {
+export default function Seats({ params }) {
   const movieName = Object.values(params)[0];
-  console.log(movieName)
+  console.log(movieName);
   const [movies, setMovies] = useState(null);
   const movie = movies
     ? movies.find(
@@ -41,9 +41,7 @@ export default function Seats({params}) {
     return <div>Movie not found</div>;
   }
   console.log(movie);
-  const { title, ticket_price} = movie
-  console.log(ticket_price)
-  return (
-        <BookingForm  title={title} ticketPrice={ticket_price}/>
-  );
+  const { title, ticket_price } = movie;
+  console.log(ticket_price);
+  return <BookingForm title={title} ticketPrice={ticket_price} />;
 }

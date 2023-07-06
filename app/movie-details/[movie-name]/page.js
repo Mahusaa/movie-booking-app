@@ -55,7 +55,9 @@ export default function Page({ params }) {
                 ${movie.ticket_price}
               </h1>
               <ButtonBlue>
-                <Link href={`/movie-details/${movieName}/booking`} >Book Ticket</Link>
+                <Link href={`/movie-details/${movieName}/booking`}>
+                  Book Ticket
+                </Link>
               </ButtonBlue>
             </div>
           </div>
