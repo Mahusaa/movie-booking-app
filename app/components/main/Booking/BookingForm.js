@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import Seat from "./Seat";
+import OrderSummary from "./OrderSummary";
 
 export default function BookingForm({ title, ticketPrice }) {
   const movieTitle = title;
@@ -82,48 +84,27 @@ export default function BookingForm({ title, ticketPrice }) {
   };
 
   return (
-    <div className="flex justify-center">
+<div className="flex justify-center">
       <div className="w-1/2">
         <h2 className="text-2xl font-bold mb-4">Booking Form</h2>
         <div className="grid grid-cols-8 gap-2">
           {Array.from({ length: 64 }, (_, index) => index + 1).map((seat) => (
-            <div
+            <Seat
               key={seat}
-              onClick={() => handleSeatClick(seat)}
-              className={`w-10 h-10 rounded-lg cursor-pointer text-white font-bold flex items-center justify-center ${
-                isSeatSelected(seat)
-                  ? "bg-green-500"
-                  : isSeatAvailable(seat)
-                  ? "bg-gray-500"
-                  : "bg-red-500"
-              }`}
-              style={{ margin: "2px" }}
-            >
-              {seat}
-            </div>
+              seat={seat}
+              selectedSeats={selectedSeats}
+              seatsByClient={seatsByClient}
+              handleSeatClick={handleSeatClick}
+            />
           ))}
         </div>
       </div>
-      <div className="w-1/2 mt-4">
-        <div className="bg-white p-4 rounded shadow">
-          <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
-          <span className="font-semibold">{`Movie: ${title}`}</span>
-          <div className="mb-2">
-            <span className="font-semibold">Selected Seats:</span>{" "}
-            {seatsByClient.join(", ")}
-          </div>
-          <div className="mb-4">
-            <span className="font-semibold">Total Price:</span> Rp {totalPrice}
-          </div>
-          <button
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-bold rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 m-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 "
-            onClick={handleConfirmBooking}
-            disabled={seatsByClient.length < 1}
-          >
-            Confirm Booking
-          </button>
-        </div>
-      </div>
+      <OrderSummary
+        title={title}
+        seatsByClient={seatsByClient}
+        ticketPrice={ticketPrice}
+        handleConfirmBooking={handleConfirmBooking}
+      />
     </div>
   );
 }
