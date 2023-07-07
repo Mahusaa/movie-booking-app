@@ -1,8 +1,14 @@
+"use client"
 import React from "react";
 import Link from "next/link";
 import Navigation from "./Navigation";
+import { logOut, login } from "@/store/auth-slice";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function MainHeader() {
+  const isAuth = useSelector((state)=> state.authReducer.value.isAuth);
+  console.log(isAuth)
   return (
     <header className="fixed top-0 left-0 w-full h-20 flex justify-between items-center bg-gray-900 px-8 z-40">
       {" "}
