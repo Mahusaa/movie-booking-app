@@ -54,11 +54,11 @@ export default function Page({ params }) {
               <h1 className="text-gray-700 font-bold text-xl">
                 ${movie.ticket_price}
               </h1>
+              <Link href={`/movie-details/${movieName}/booking`}>
               <ButtonBlue>
-                <Link href={`/movie-details/${movieName}/booking`}>
                   Book Ticket
-                </Link>
               </ButtonBlue>
+              </Link>
             </div>
           </div>
         </div>

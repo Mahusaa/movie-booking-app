@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Seat from "./Seat";
 import OrderSummary from "./OrderSummary";
+import { useDispatch } from "react-redux";
+import { balancing } from "@/store/auth-slice";
 
 export default function BookingForm({ title, ticketPrice }) {
+  const dispatch = useDispatch();
   const movieTitle = title;
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [seatsByClient, setSeatsByClient] = useState([]);
@@ -26,14 +29,6 @@ export default function BookingForm({ title, ticketPrice }) {
             }
             allSelectedSeats = allSelectedSeats.concat(movie.selectedSeats);
           });
-
-          const totalSeats = Array.from(
-            { length: 64 },
-            (_, index) => index + 1
-          );
-          const availableSeats = totalSeats.filter(
-            (seat) => !allSelectedSeats.includes(seat)
-          );
         } else {
           console.error("Failed to fetch seat availability:", response.status);
         }
@@ -55,20 +50,14 @@ export default function BookingForm({ title, ticketPrice }) {
     }
   };
 
-  const isSeatSelected = (seat) => {
-    return selectedSeats.includes(seat);
-  };
-
-  const isSeatAvailable = (seat) => {
-    return !selectedSeats.includes(seat);
-  };
 
   const totalPrice = ticketPrice * seatsByClient.length;
 
   const handleConfirmBooking = async () => {
     if (seatsByClient.length < 1) {
       return; // Do nothing if no seats are selected
-    }
+    };
+
     await fetch(
       "https://movie-booking-f84f4-default-rtdb.asia-southeast1.firebasedatabase.app/movie.json",
       {
@@ -80,6 +69,7 @@ export default function BookingForm({ title, ticketPrice }) {
         }),
       }
     );
+    dispatch(balancing(totalPrice));
     window.location.reload();
   };
 

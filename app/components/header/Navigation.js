@@ -3,6 +3,7 @@ import React from "react";
 import ButtonBlue from "../UI/ButtonBlue";
 import ButtonGrey from "../UI/ButtonGrey";
 
+
 export default function Navigation() {
   return (
     <nav className="flex items-center">

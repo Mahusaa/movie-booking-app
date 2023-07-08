@@ -1,11 +1,10 @@
+
 import { createSlice } from "@reduxjs/toolkit";
 
 const initalState = {
     value: {
-        isAuth: false,
-        username: "",
-        uid: "",
-        isModerator: false,
+        isAuth: true,
+        balance: 400000,
     }
 }
 
@@ -20,14 +19,19 @@ export const auth = createSlice({
             return {
                 value: {
                     isAuth: true,
-                    username: action.payload,
-                    uid: "djfehe",
-                    isModerator: false,
+                }
+            }
+        },
+        balancing: (state, action) =>{
+            return {
+                value: {
+                    isAuth: state.value.isAuth,
+                    balance: state.value.balance - action.payload
                 }
             }
         }
     }
 });
 
-export const { login, logOut } = auth.actions
+export const { login, logOut, balancing } = auth.actions
 export default auth.reducer;
