@@ -10,8 +10,7 @@ html::-webkit-scrollbar {
   }
   
   html {
-    font-family: sans-serif;
-    background: #fff;
+    background: #15202b;
     scrollbar-width: none;
   }
   

@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initalState = {
     value: {
-        isAuth: true,
+        isAuth: false,
         balance: 400000,
     }
 }
