@@ -93,7 +93,7 @@ export default function BookingForm({ title, ticketPrice }) {
           <span className="mb-2 text-white mr-8"> Empty</span>
         </div>
 
-        <div className="grid grid-cols-8 gap-2 justify-center mx-auto pl-10">
+        <div className="grid grid-cols-8 gap-2 justify-center mx-auto pl-2">
           {Array.from({ length: 64 }, (_, index) => 64 - index).map((seat) => (
             <Seat
               key={seat}
