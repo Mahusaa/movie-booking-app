@@ -1,6 +1,7 @@
 import React from "react";
 import NewButton from "./LimeButton";
 import {RxCalendar} from 'react-icons/rx'
+import LimeButton from "./LimeButton";
 
 export default function MovieCard(props) {
   const { age, release, title, price, poster } = props;
@@ -24,7 +25,7 @@ export default function MovieCard(props) {
           </h4>
           <div className="mt-1 font-bold text-xl text-lime-500">{`Rp. ${price}`}</div>
           <div className="flex justify-center items-center">
-            <NewButton className="text-sm ml-4">Book Now</NewButton>
+            <LimeButton>Book Now</LimeButton>
           </div>
         </div>
         <div

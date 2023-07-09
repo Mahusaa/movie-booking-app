@@ -43,7 +43,7 @@ export default function MainHeader() {
   return (
     <header
       className={`fixed top-0 left-0 w-full h-20 flex justify-between items-center px-8 z-40 transition-opacity duration-300 ${
-        showHeader || isHovered ? "opacity-80" : "opacity-0"
+        showHeader || isHovered ? "opacity-100" : "opacity-0"
       }`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

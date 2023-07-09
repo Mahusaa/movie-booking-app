@@ -50,13 +50,12 @@ export default function BookingForm({ title, ticketPrice }) {
     }
   };
 
-
   const totalPrice = ticketPrice * seatsByClient.length;
 
   const handleConfirmBooking = async () => {
     if (seatsByClient.length < 1) {
       return; // Do nothing if no seats are selected
-    };
+    }
 
     await fetch(
       "https://movie-booking-f84f4-default-rtdb.asia-southeast1.firebasedatabase.app/movie.json",
@@ -74,11 +73,28 @@ export default function BookingForm({ title, ticketPrice }) {
   };
 
   return (
-    <div className="flex justify-center">
-      <div className="w-1/2">
-        <h2 className="text-2xl font-bold mb-4">Booking Form</h2>
-        <div className="grid grid-cols-8 gap-2">
-          {Array.from({ length: 64 }, (_, index) => index + 1).map((seat) => (
+    <div className="flex flex-col items-center justify-center my-20 mx-20">
+      <div className="w-full sm:w-5/6 md:w-3/4 lg:w-1/2">
+        <h2 className="text-2xl font-bold mb-4 text-lime-500 text-center">
+          SELECT SEATS:
+        </h2>
+        <div className="h-4 flex justify-center my-8">
+          <span>
+            <div className="bg-lime-500 w-4 h-4 mt-1 mr-2" />
+          </span>
+          <span className="mb-2 text-white mr-8"> Selected </span>
+          <span>
+            <div className="bg-lime-900 w-4 h-4 mt-1 mr-2" />
+          </span>
+          <span className="mb-2 text-white mr-8"> Filled </span>
+          <span>
+            <div className="bg-gray-500 w-4 h-4 mt-1 mr-2" />
+          </span>
+          <span className="mb-2 text-white mr-8"> Empty</span>
+        </div>
+
+        <div className="grid grid-cols-8 gap-2 justify-center mx-auto pl-10">
+          {Array.from({ length: 64 }, (_, index) => 64 - index).map((seat) => (
             <Seat
               key={seat}
               seat={seat}
@@ -88,6 +104,9 @@ export default function BookingForm({ title, ticketPrice }) {
             />
           ))}
         </div>
+      </div>
+      <div className="bg-lime-500  my-10 px-8 md:px-64 ">
+        <h1 className="text-white font-bold text-xl">MOVIE SCREEN</h1>
       </div>
       <OrderSummary
         title={title}

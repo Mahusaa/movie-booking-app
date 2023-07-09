@@ -40,8 +40,6 @@ export default function Seats({ params }) {
   if (!movie) {
     return <div>Movie not found</div>;
   }
-  console.log(movie);
   const { title, ticket_price } = movie;
-  console.log(ticket_price);
   return <BookingForm title={title} ticketPrice={ticket_price} />;
 }
