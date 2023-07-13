@@ -59,7 +59,7 @@ export default function Page({ params }) {
           height={380}
         />
         <div className="px-20 pt-50 flex-col">
-        <div className="pl-20">
+        <div className="pl-15">
           <h1 className="text-5xl font-serif font-semibold text-lime-500">
             {movie.title}
           </h1>

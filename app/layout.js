@@ -14,7 +14,6 @@ export default function RootLayout({ children }) {
       <MainHeader />
         {children}
         <Suspense fallback={<Loading />} />
-        <Footer />
         </ReduxProvider>
       </body>
     </html>

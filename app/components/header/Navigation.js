@@ -18,7 +18,7 @@ export default function Navigation() {
         <DarkerButton>About</DarkerButton>
       </Link>
       </div>
-      <Link href="/logout">
+      <Link href="/login">
         <LimeButton>LOGIN</LimeButton>
       </Link>
     </nav>

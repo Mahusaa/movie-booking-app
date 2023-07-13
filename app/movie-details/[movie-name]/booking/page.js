@@ -40,6 +40,6 @@ export default function Seats({ params }) {
   if (!movie) {
     return <div>Movie not found</div>;
   }
-  const { title, ticket_price } = movie;
-  return <BookingForm title={title} ticketPrice={ticket_price} />;
+  const { title, ticket_price, poster_url } = movie;
+  return <BookingForm title={title} ticketPrice={ticket_price} posterURL={poster_url}/>;
 }

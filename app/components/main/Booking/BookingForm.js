@@ -4,7 +4,7 @@ import OrderSummary from "./OrderSummary";
 import { useDispatch } from "react-redux";
 import { balancing } from "@/store/auth-slice";
 
-export default function BookingForm({ title, ticketPrice }) {
+export default function BookingForm({ title, ticketPrice, posterURL }) {
   const dispatch = useDispatch();
   const movieTitle = title;
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -109,6 +109,7 @@ export default function BookingForm({ title, ticketPrice }) {
         <h1 className="text-white font-bold text-xl">MOVIE SCREEN</h1>
       </div>
       <OrderSummary
+        posterURL={posterURL}
         title={title}
         seatsByClient={seatsByClient}
         ticketPrice={ticketPrice}

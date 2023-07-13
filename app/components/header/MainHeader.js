@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import GetAuth from "./GetAuth";
 import {BiCameraMovie} from 'react-icons/bi'
 export default function MainHeader() {
-  const isAuth = useSelector((state) => state.authReducer.value.isAuth);
+  const isAuth = useSelector((state) => state.authReducer.isAuth);
   const [showHeader, setShowHeader] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
 
