@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Seat from "./Seat";
 import OrderSummary from "./OrderSummary";
-import { useDispatch } from "react-redux";
-import { balancing } from "@/store/auth-slice";
+import { useSelector } from "react-redux";
 
 export default function BookingForm({ title, ticketPrice, posterURL }) {
-  const dispatch = useDispatch();
+  const isAuth = useSelector((state) => state.authReducer.isAuth);
+  const userData = useSelector((state) => state.authReducer.userData);
   const movieTitle = title;
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [seatsByClient, setSeatsByClient] = useState([]);
@@ -53,8 +53,8 @@ export default function BookingForm({ title, ticketPrice, posterURL }) {
   const totalPrice = ticketPrice * seatsByClient.length;
 
   const handleConfirmBooking = async () => {
-    if (seatsByClient.length < 1) {
-      return; // Do nothing if no seats are selected
+    if (seatsByClient.length < 1 || !isAuth ) {
+      return; // Do nothing if no seats are selected and client not auth
     }
 
     await fetch(
@@ -65,10 +65,10 @@ export default function BookingForm({ title, ticketPrice, posterURL }) {
           title,
           totalPrice,
           selectedSeats: seatsByClient,
+          userData
         }),
       }
     );
-    dispatch(balancing(totalPrice));
     window.location.reload();
   };
 
@@ -117,4 +117,4 @@ export default function BookingForm({ title, ticketPrice, posterURL }) {
       />
     </div>
   );
-}
+};

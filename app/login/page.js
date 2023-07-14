@@ -2,8 +2,12 @@
 import React, { useState, useRef } from "react";
 import LimeButton from "../components/UI/LimeButton";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { useDispatch } from "react-redux";
+import { login } from "@/store/auth-slice";
+import Link from "next/link";
 
 export default function Login() {
+  const dispatch = useDispatch();
   const [loginForm, setLoginForm] = useState({
     email: "",
     password: "",
@@ -23,7 +27,7 @@ export default function Login() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
       const { email, password } = loginForm;
       const response = await fetch(
@@ -36,6 +40,12 @@ export default function Login() {
       );
       if (userId) {
         const user = userData[userId];
+        const userDataDetail = {
+          name: user.name,
+          age: user.age,
+          email: user.email,
+        };
+        dispatch(login(userDataDetail))
         console.log("User authenticated:", user);
         // Reset the form
         setLoginForm({ email: "", password: "" });
@@ -95,9 +105,10 @@ export default function Login() {
               </div>
             </div>
           </div>
-
           <LimeButton type="submit">LOGIN</LimeButton>
         </form>
+        Don&apos;t have an account?{" "}
+        <Link href={'/sign-up'}><LimeButton>SIGN UP</LimeButton></Link>
       </div>
     </div>
   );
