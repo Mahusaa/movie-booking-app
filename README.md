@@ -2,6 +2,13 @@
 
 The Movie Booking App is a web application that allows users to book movie tickets and select seats from a list of available options. Users can also provide feedback by liking or disliking movies. The app provides an intuitive interface for browsing movies, selecting seats, and confirming bookings.
 
+## Allert
+This is a repository for a movie booking app that allows users to select seats from a list of available seats. The app currently has 64 available seats. Please note that the app is not yet fully responsive and is best viewed on a laptop or desktop.
+
+The Redux state management is not yet optimized, so it's advised not to refresh the page while using the app. To proceed with booking and confirm the booking, users need to be authenticated.
+
+Please be aware that the authentication status will be reset if you refresh the page and click confirm booking.
+
 ## Features
 
 - Browse a list of available movies
