@@ -107,8 +107,12 @@ export default function Login() {
           </div>
           <LimeButton type="submit">LOGIN</LimeButton>
         </form>
-        Don&apos;t have an account?{" "}
-        <Link href={'/sign-up'}><LimeButton>SIGN UP</LimeButton></Link>
+        <div className="mt-4 text-white text-center flex items-center justify-center">
+          <h4 className="text-white mr-4">Dont have any account?</h4>
+          <Link href="/sign-up">
+            <LimeButton>SIGN UP</LimeButton>
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -52,9 +52,9 @@ export default function MainHeader() {
         <span className="flex items-center text-2xl font-semibold whitespace-nowrap dark:text-white">
           <BiCameraMovie className="text-lime-500 text-3xl mr-1" />
           <span className="mt-1">
-            Green
+            US
           </span>
-          <span className="mt-1">TIX</span>
+          <span className="mt-1">tix</span>
         </span>
       </Link>
       {isAuth ? <GetAuth /> : <Navigation />}
