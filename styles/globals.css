@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html::-webkit-scrollbar {
-  display: none;
-}
 * {
     box-sizing: border-box;
   }
