@@ -11,7 +11,6 @@ html::-webkit-scrollbar {
   
   html {
     background: #15202b;
-    scrollbar-width: none;
   }
   
   body {
